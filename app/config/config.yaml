@@ -1,0 +1,14 @@
+description: Aranda PRD config file
+app:
+  renew_auth_interval: 15
+  log_level: warning
+  reload: True
+base_url: https://itsm.sonda.com/asmsapi
+api:
+  auth:
+    res_path: /api/v9/authentication/
+  re_auth:
+    res_path: /api/v9/authentication/renewtoken
+auth_data:
+  console_type: 1
+  provider_id: 0
