@@ -1,7 +1,9 @@
 from termcolor import colored
-from datetime import datetime
+import datetime
+import time
 import sys
+import os
 
 def custom_log(msg: str, color: str = 'red') -> None:
-    print(colored(f'{datetime.now()} - {msg}', color), file=sys.stderr)
+    print(colored(f'[{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S ")}{time.strftime("%z")}] [{os.getpid()}] {msg}', color), file=sys.stderr)
     sys.stderr.flush()

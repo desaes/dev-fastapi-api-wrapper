@@ -16,8 +16,7 @@ router = APIRouter(
     summary="Aranda Token",
     response_description="Aranda Token")
 async def get_token(
-        request: Request,
-        response: Response
+        request: Request
     ):
     """
     ### This route is used get a valid Aranda authentication token
@@ -29,7 +28,6 @@ async def get_token(
     """
     
     if request.app.aranda:
-        response.status_code = 200
         return {"token": request.app.aranda.token()}
     else:
-        raise HTTPException(status_code=503, detail=f'Not authenticated on Aranda Instance yet, retry later')
+        raise HTTPException(status_code=503, detail=f'Not authenticated on Aranda instance yet, retry again later')
