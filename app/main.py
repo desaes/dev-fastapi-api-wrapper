@@ -8,7 +8,7 @@ from routes.api import router as api_router
 from src.classes.aranda import Aranda
 from src.libs.logger import custom_log
 
-VERSION="0.0.1"
+VERSION="0.0.2"
 
 if not os.path.isfile("config/config.yaml"):
     custom_log(f"[ERROR] Configuration file not found", "red")
@@ -41,6 +41,7 @@ async def startup_event():
 def shutdown_event():
     custom_log(f"[WARN] Exiting the main program", "yellow")
 
+"""
 origins = ["http://localhost:8000"]
 
 app.add_middleware(
@@ -50,6 +51,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+"""
 
 app.include_router(api_router)
 
