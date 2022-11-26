@@ -4,8 +4,8 @@ import sched
 import time
 import threading
 import urllib3
-from src.libs.logger import custom_log
-from src.libs.utils import print_nothing as pn
+from app.src.libs.logger import custom_log
+from app.src.libs.utils import print_nothing as pn
 import time
 
 class Aranda():

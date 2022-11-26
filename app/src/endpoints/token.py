@@ -1,9 +1,7 @@
 from fastapi import APIRouter
 from fastapi import Request, Response, status, HTTPException
 from fastapi import Query, Path
-from src.libs.json_utils import json_mapper
-import json
-import requests
+from app.src.libs.json_utils import json_mapper
 
 #APIRouter creates path operations for user module
 router = APIRouter(
@@ -26,7 +24,6 @@ async def get_token(
     #### Call example: http(s)://{api-server}/automation/itsm/aranda-api-auther/v1/token
 
     """
-    
     if request.app.aranda:
         return {"token": request.app.aranda.token()}
     else:

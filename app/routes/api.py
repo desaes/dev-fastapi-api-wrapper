@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from src.endpoints import token as token
-from src.endpoints import whoami as whoami
+from app.src.endpoints import token as token
+from app.src.endpoints import whoami as whoami
 
 router = APIRouter()
 router.include_router(token.router)

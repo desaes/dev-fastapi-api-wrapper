@@ -1,20 +1,21 @@
 from genericpath import isfile
 import os
-import uvicorn
 import yaml
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from routes.api import router as api_router
-from src.classes.aranda import Aranda
-from src.libs.logger import custom_log
+from app.routes.api import router as api_router
+from app.src.classes.aranda import Aranda
+from app.src.libs.logger import custom_log
 
-VERSION="0.0.2"
+VERSION="0.0.3"
 
-if not os.path.isfile("config/config.yaml"):
+config_file_path = "app/config/config.yaml" if os.getenv("API_ENV") != "DEV" else "app/config/examples/config.yaml"
+
+if not os.path.isfile(config_file_path):
     custom_log(f"[ERROR] Configuration file not found", "red")
     exit(1)
 
-with open(f"config/config.yaml","r") as config_file:
+with open(config_file_path,"r") as config_file:
     try:
         config = yaml.safe_load(config_file)
     except yaml.YAMLError as e:
@@ -27,6 +28,7 @@ app = FastAPI(
     root_path=os.getenv("API_PATH")
 )
 
+app.aranda = Aranda(config, renew_auth_interval=config["app"]["renew_auth_interval"])
 
 @app.on_event("startup")
 async def startup_event():
@@ -34,8 +36,8 @@ async def startup_event():
     custom_log(f"[INFO] Version: {VERSION}", "green")
     custom_log(f"[INFO] API Path: {os.getenv('API_PATH')}", "green")
     custom_log(f"[INFO] Renewing authentication token every {config['app']['renew_auth_interval']} seconds", "green")
-    app.aranda = Aranda(config, renew_auth_interval=config["app"]["renew_auth_interval"])
-    
+
+
 
 @app.on_event("shutdown")
 def shutdown_event():
@@ -55,7 +57,8 @@ app.add_middleware(
 
 app.include_router(api_router)
 
-if __name__ == "__main__":
+"""
+if __name__ == "app.main":
     uvicorn.run(
         "main:app", 
         host="0.0.0.0", 
@@ -63,3 +66,4 @@ if __name__ == "__main__":
         log_level=config["app"]["log_level"],
         reload=config["app"]["reload"]
         )
+"""

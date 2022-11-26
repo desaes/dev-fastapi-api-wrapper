@@ -1,8 +1,9 @@
 from fastapi import APIRouter
 from fastapi import Request, Response, status, HTTPException
 from fastapi import Query, Path
-from src.libs.json_utils import json_mapper
+from app.src.libs.json_utils import json_mapper
 import requests
+import urllib3
 
 #APIRouter creates path operations for user module
 router = APIRouter(
@@ -27,6 +28,7 @@ async def whoami(
     #### Call example: http(s)://{api-server}/automation/itsm/aranda-api-auther/v1/whoami
 
     """
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     me = 'whoami'
     request.app.aranda.token()
     if request.app.aranda:
