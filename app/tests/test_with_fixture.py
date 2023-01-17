@@ -12,12 +12,7 @@ def test_app():
     time.sleep(5) # wait 10s for the authentication
     yield client
 
-def test_token(test_app):
-    response = test_app.get("/v1/token")
+def test_example(test_app):
+    response = test_app.get("/v1/example")
     assert response.status_code == 200
-    assert response.json()['token']
-
-def test_whoami(test_app):
-    response = test_app.get("/v1/whoami")
-    assert response.status_code == 200
-    assert response.json()['active'] == 1
+    assert response.json()['slideshow']

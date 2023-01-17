@@ -1,0 +1,4 @@
+fmt:
+	black .
+	isort .
+	autoflask .
